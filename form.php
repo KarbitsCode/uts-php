@@ -26,7 +26,12 @@
         } else {
             if ($productDB->addProduct($data)) {
                 $message = "Produk berhasil ditambahkan!";
-                echo "<script>setTimeout(function(){ window.location.href = 'dash.php'; }, 2000);</script>";
+                echo "<script>
+                        window.addEventListener('DOMContentLoaded', function() {
+                            document.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
+                        });
+                        setTimeout(function(){ window.location.href = 'dash.php'; }, 2000);
+                    </script>";
                 $_POST = array();
             } else {
                 $error = "Gagal menambahkan produk!";

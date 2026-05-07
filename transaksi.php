@@ -60,7 +60,12 @@
                 
                 if ($transactionDB->addTransaction($data)) {
                     $message = "Transaksi berhasil ditambahkan!";
-                    echo "<script>setTimeout(function(){ window.location.href = 'dash.php'; }, 2000);</script>";
+                    echo "<script>
+                            window.addEventListener('DOMContentLoaded', function() {
+                                document.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
+                            });
+                            setTimeout(function(){ window.location.href = 'dash.php'; }, 2000);
+                        </script>";
                     $_POST = array();
                 } else {
                     $error = "Gagal menambahkan transaksi!";
@@ -73,7 +78,7 @@
     ?>
 </head>
 <body>
-    <h1>Transaksi</h1>
+    <h1>Tambah Transaksi</h1>
     
     <?php if ($message): ?>
         <p style="color: green;"><?php echo $message; ?></p>
@@ -83,7 +88,6 @@
         <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
     
-    <h2>Tambah Transaksi</h2>
     <form method="POST">
         <label>Pilih Produk:</label><br>
         <select name="id_produk" required>
@@ -107,9 +111,7 @@
         <input type="datetime-local" name="tanggal" value="<?php echo htmlspecialchars($_POST['tanggal'] ?? ''); ?>"><br><br>
         
         <button type="submit">Simpan Transaksi</button>
+        <button type="button" onclick="window.location.href='dash.php'">Kembali</button>
     </form>
-    
-    <br>
-    <a href="dash.php">Kembali ke Dashboard</a>
 </body>
 </html>
